@@ -41,7 +41,7 @@
   </div>
 
   <script>
-    const API_BASE = 'http://localhost:5000/api';
+    const API_BASE = 'http://localhost:3001/api';
     let token = localStorage.getItem('token') || null;
     let currentUser = null;
 

@@ -1,90 +1,11 @@
+<!-- public/index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Frontend Node App</title>
-  <style>
-    body { font-family: Arial; padding: 20px; }
-    input, button { margin: 5px; padding: 8px; }
-  </style>
+  <meta charset="UTF-8" />
+  <title>Node Frontend</title>
 </head>
 <body>
-  <h1>Node Frontend (Port 3001)</h1>
-
-  <div>
-    <h2>Login</h2>
-    <input id="username" placeholder="Username" />
-    <input id="password" type="password" placeholder="Password" />
-    <button onclick="login()">Login</button>
-  </div>
-
-  <div id="post-section" style="display:none;">
-    <h2>Create Post</h2>
-    <input id="title" placeholder="Title" />
-    <textarea id="content" placeholder="Content"></textarea>
-    <br>
-    <button onclick="createPost()">Submit</button>
-  </div>
-
-  <div id="posts"></div>
-
-  <script>
-    const API_BASE = 'http://localhost:5000/api';
-    let token = null;
-
-    async function login() {
-      const username = document.getElementById('username').value;
-      const password = document.getElementById('password').value;
-
-      const res = await fetch(`${API_BASE}/auth/login`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password })
-      });
-
-      const data = await res.json();
-      if (res.ok) {
-        token = data.token;
-        document.getElementById('post-section').style.display = 'block';
-        fetchPosts();
-      } else {
-        alert(data.error || 'Login failed');
-      }
-    }
-
-    async function createPost() {
-      const title = document.getElementById('title').value;
-      const content = document.getElementById('content').value;
-
-      const res = await fetch(`${API_BASE}/posts`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify({ title, content })
-      });
-
-      if (res.ok) {
-        fetchPosts();
-      } else {
-        const data = await res.json();
-        alert(data.error || 'Failed to create post');
-      }
-    }
-
-    async function fetchPosts() {
-      const res = await fetch(`${API_BASE}/posts`);
-      const posts = await res.json();
-      const postsDiv = document.getElementById('posts');
-      postsDiv.innerHTML = '<h2>Posts</h2>';
-
-      posts.forEach(p => {
-        const div = document.createElement('div');
-        div.innerHTML = `<strong>${p.title}</strong><p>${p.content}</p><hr>`;
-        postsDiv.appendChild(div);
-      });
-    }
-  </script>
+  <h1>Hello from frontend!</h1>
 </body>
 </html>

@@ -1,16 +1,16 @@
-// Importing required packages
-const http = require('http');
 const express = require('express');
-
+const path = require('path');
 const app = express();
+const PORT = 3001;
 
-app.set('port', process.env.PORT || 3001); // Application port is set
-app.set('views', __dirname + '/app/server/views'); // Views folder is set
-app.set('view engine', 'ejs'); // View engine is set
-app.use(express.static(__dirname + '/app/public')); // Public folder containing static files is set
+// Serve static files from "public" directory
+app.use(express.static(path.join(__dirname, 'public')));
 
-require('./app/routes')(app); // Routes are imported
+// Fallback to index.html for SPA routes (optional)
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 
-http.createServer(app).listen(app.get('port'), function(){
-	console.log('The application is running on port ' + app.get('port'));
-}); // Http server is created
+app.listen(PORT, () => {
+  console.log(`Frontend server running at http://localhost:${PORT}`);
+});
